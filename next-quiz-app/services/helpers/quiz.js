@@ -12,12 +12,12 @@ export const getResult = (questions, userAnswers) => {
             score: score,
         }
     } else {
+
         let attempted_questions = Object.keys(userAnswers).length;
         for (let index of Object.keys(userAnswers)) {
             let userAnswer = userAnswers[index];
-            let correct_answer = questions[index].answers;
-            console.log(userAnswer, correct_answer)
-            if (JSON.stringify(userAnswer) === JSON.stringify(correct_answer)) {
+            let correctAnswer = questions[index].answers.filter(i => i);
+            if (checkAnswer(userAnswer, correctAnswer)) {
                 correct_answers += 1;
             }
         }
@@ -33,4 +33,13 @@ export const getResult = (questions, userAnswers) => {
     }
 
     return result;
+}
+
+const checkAnswer = (userAnswer, correct_answer) => {
+    for (let answer of correct_answer) {
+        if (!userAnswer.includes(answer)) {
+            return false;
+        }
+    }
+    return true
 }
