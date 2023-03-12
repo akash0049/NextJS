@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 /server/node_modules
+/server/next-quiz-app-35c4b-firebase-adminsdk-k56ie-9996378457.json
 
 # testing
 /coverage

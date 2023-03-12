@@ -12,6 +12,10 @@ import { useRouter } from "next/router";
 import QuizList from "@/components/quiz/quiz_list";
 import { useAuth } from "@/context/auth_context";
 import Link from "next/link";
+import FirebaseService from "@/services/firebase/firebase_config";
+import { getAuth } from "firebase/auth";
+
+const auth = FirebaseService.auth;
 
 const UserProfile = () => {
   const router = useRouter();
@@ -33,6 +37,7 @@ const UserProfile = () => {
           body: JSON.stringify({ email: currentUser.email }),
           headers: {
             "Content-Type": "application/json",
+            access_token: currentUser.accessToken,
           },
         }
       );
@@ -42,7 +47,7 @@ const UserProfile = () => {
 
     getUserQuizzes();
   }, []);
-  console.log(userQuizzes);
+
   return (
     <Page title="User Profile">
       <Container sx={{ my: 3, display: "flex", justifyContent: "center" }}>

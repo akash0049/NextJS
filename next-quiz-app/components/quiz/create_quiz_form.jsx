@@ -21,7 +21,7 @@ import Radio from "@mui/material/Radio";
 import Checkbox from "@mui/material/Checkbox";
 import { useAuth } from "@/context/auth_context";
 
-const CreateQuizForm = () => {
+const CreateQuizForm = ({ quiz }) => {
   const { currentUser } = useAuth();
   const questionData = {
     title: "",
@@ -32,32 +32,40 @@ const CreateQuizForm = () => {
   };
 
   const initialValues = {
-    quiz_title: "",
-    questions: [questionData],
+    quiz_title: (quiz && quiz.title) || "",
+    questions: (quiz && quiz.questions) || [questionData],
   };
 
   const formik = useFormik({
     initialValues,
     validationSchema: quizSchema,
     onSubmit: async (values, action) => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_API}/quiz/add_quiz`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: currentUser.email,
-            title: values.quiz_title,
-            questions: values.questions,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      let url = `${process.env.NEXT_PUBLIC_SERVER_API}/quiz/add_quiz`;
+      let method = "POST";
+      if (quiz) {
+        url = `${process.env.NEXT_PUBLIC_SERVER_API}/quiz/update_quiz/${quiz._id}`;
+        method = "PUT";
+      }
+
+      const response = await fetch(url, {
+        method: method,
+        body: JSON.stringify({
+          email: currentUser.email,
+          title: values.quiz_title,
+          questions: values.questions,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          access_token: currentUser.accessToken,
+        },
+      });
       const data = await response.json();
-      if (data.message === "Quiz added successfully") {
+      if (!quiz && data.message === "Quiz added successfully") {
         alert("Quiz added successfully");
         action.resetForm();
+      }
+      if (quiz && data.message === "Quiz Updated") {
+        alert("Quiz updated");
       }
     },
   });
@@ -453,11 +461,15 @@ const CreateQuizForm = () => {
 
                           <Stack
                             direction="row"
-                            sx={{ display: "flex", justifyContent: "end" }}
+                            sx={{
+                              display: "flex",
+                              justifyContent: "end",
+                            }}
                           >
                             <Button
                               onClick={() => push(questionData)}
                               startIcon={<AddIcon />}
+                              sx={{ color: "teal" }}
                             >
                               Add
                             </Button>
@@ -470,7 +482,7 @@ const CreateQuizForm = () => {
               </Stack>
 
               <Stack direction="row" justifyContent={"center"} sx={{ my: 3 }}>
-                <Button type="submit" variant="contained">
+                <Button type="submit" variant="outlined" sx={{ color: "teal" }}>
                   Submit
                 </Button>
               </Stack>

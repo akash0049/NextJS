@@ -31,6 +31,7 @@ const QuizCard = ({ quiz, page }) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          access_token: currentUser.accessToken,
         },
       }
     );
@@ -48,6 +49,7 @@ const QuizCard = ({ quiz, page }) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          access_token: currentUser.accessToken,
         },
       }
     );
@@ -102,19 +104,22 @@ const QuizCard = ({ quiz, page }) => {
             currentUser.email === quiz.created_by &&
             !quiz.is_published && (
               <>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  color="primary"
-                  startIcon={<EditIcon sx={{ mb: 0.5 }} />}
-                >
-                  Edit
-                </Button>
+                <Link href={`/user_profile/edit_quiz/${quiz._id}`}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    color="primary"
+                    startIcon={<EditIcon sx={{ mb: 0.5, mx: -0.5 }} />}
+                    sx={{ mr: 1, color: "teal" }}
+                  >
+                    Edit
+                  </Button>
+                </Link>
                 <Button
                   variant="outlined"
                   size="small"
                   color="success"
-                  startIcon={<PublishIcon sx={{ mb: 0.5 }} />}
+                  startIcon={<PublishIcon sx={{ mb: 0.5, mx: -0.5 }} />}
                   onClick={() => handleConfirmationDialog("Publish")}
                 >
                   Publish
@@ -126,7 +131,7 @@ const QuizCard = ({ quiz, page }) => {
               variant="outlined"
               size="small"
               color="error"
-              startIcon={<DeleteIcon sx={{ mb: 0.5 }} />}
+              startIcon={<DeleteIcon sx={{ mb: 0.5, mx: -0.5 }} />}
               onClick={() => handleConfirmationDialog("Delete")}
             >
               Delete
@@ -136,7 +141,8 @@ const QuizCard = ({ quiz, page }) => {
               <Button
                 variant="outlined"
                 size="small"
-                startIcon={<RocketLaunchIcon sx={{ mb: 0.5 }} />}
+                startIcon={<RocketLaunchIcon sx={{ mb: 0.5, mx: -0.5 }} />}
+                sx={{ color: "teal" }}
               >
                 Take Quiz
               </Button>

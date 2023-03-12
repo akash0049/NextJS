@@ -81,10 +81,11 @@ const ConfirmationDialog = ({
               handleConfirm();
               handleClose();
             }}
+            sx={{ color: "teal" }}
           >
             <Typography>Yes</Typography>
           </Button>
-          <Button autoFocus onClick={handleClose}>
+          <Button autoFocus onClick={handleClose} sx={{ color: "teal" }}>
             <Typography>No</Typography>
           </Button>
         </DialogActions>

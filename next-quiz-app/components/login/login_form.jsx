@@ -115,9 +115,9 @@ const LoginForm = ({ action, login, signUp }) => {
                       edge="end"
                     >
                       {showPassword ? (
-                        <VisibilityOffIcon />
+                        <VisibilityOffIcon sx={{ color: "teal" }} />
                       ) : (
-                        <VisibilityIcon />
+                        <VisibilityIcon sx={{ color: "teal" }} />
                       )}
                     </IconButton>
                   </InputAdornment>
@@ -137,6 +137,7 @@ const LoginForm = ({ action, login, signUp }) => {
             type="submit"
             variant="outlined"
             startIcon={isSubmitting ? <CircularProgress size={20} /> : null}
+            sx={{ color: "teal" }}
           >
             {action === "Login"
               ? isSubmitting

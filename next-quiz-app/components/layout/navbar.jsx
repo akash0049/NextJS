@@ -22,17 +22,17 @@ export default function Navbar() {
     <AppBar>
       <Toolbar sx={{ backgroundColor: "teal" }}>
         <Typography
-          variant="h6"
+          variant="h4"
           component="div"
           sx={{ flexGrow: 1, ml: "10%" }}
         >
           <Link href="/" style={{ color: "white" }}>
-            Quiz App
+            Quizify
           </Link>
         </Typography>
         {currentUser && (
           <Box sx={{ mr: "10%" }}>
-            <Button color="inherit" startIcon={<PersonIcon />}>
+            <Button color="inherit" startIcon={<PersonIcon />} sx={{ mx: 1.5 }}>
               <Link href="/user_profile" style={{ color: "white" }}>
                 Profile
               </Link>
