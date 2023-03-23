@@ -140,6 +140,7 @@ const CreateQuizForm = ({ quiz }) => {
                         <Fragment>
                           {questions.map((_, index) => (
                             <Box
+                              key={index}
                               sx={{ border: 0.2, padding: 2, borderRadius: 1 }}
                             >
                               <Grid container columnSpacing={2} rowSpacing={2}>
@@ -291,7 +292,7 @@ const CreateQuizForm = ({ quiz }) => {
                                   </Grid>
                                 )}
                                 {values.questions[index].options.map((_, i) => (
-                                  <Grid item xs={6}>
+                                  <Grid item xs={6} key={i}>
                                     <FormControl fullWidth>
                                       <TextField
                                         id={`questions[${index}].options[${i}]`}
@@ -344,6 +345,7 @@ const CreateQuizForm = ({ quiz }) => {
                                                 index
                                               ].options.map((option, i) => (
                                                 <Grid
+                                                  key={i}
                                                   item
                                                   xs={
                                                     12 /
@@ -388,6 +390,7 @@ const CreateQuizForm = ({ quiz }) => {
                                                 index
                                               ].options.map((option, i) => (
                                                 <Grid
+                                                  key={i}
                                                   item
                                                   xs={
                                                     12 /

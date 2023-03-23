@@ -20,7 +20,7 @@ const QuizList = ({ page, quizzes }) => {
         {quizzes &&
           quizzes.length > 0 &&
           quizzes.map((quiz) => (
-            <Grid item lg={4}>
+            <Grid key={quiz._id} item lg={4}>
               <QuizCard quiz={quiz} page={page} />
             </Grid>
           ))}
