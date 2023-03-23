@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import Question from "./question";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import { getResult } from "@/services/helpers/quiz";
 import ConfirmationDialog from "../layout/confirmation_dialog";
 import QuizResult from "./quiz_result";
 
-const TakeQuizForm = ({ questions }) => {
+const TakeQuizForm = ({ quiz_id, questions }) => {
   const [userAnswers, setUserAnswers] = useState(undefined);
   const [result, setResult] = useState(undefined);
 
@@ -40,8 +39,20 @@ const TakeQuizForm = ({ questions }) => {
     }
   };
 
-  const handleSubmit = () => {
-    const result = getResult(questions, userAnswers);
+  const handleSubmit = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_API}/quiz/get_quiz_result/${quiz_id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          userAnswers: userAnswers,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const result = await response.json();
     setResult(result);
   };
 

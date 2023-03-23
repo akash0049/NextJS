@@ -22,7 +22,7 @@ const TakeQuiz = (props) => {
               <Typography variant="body1">Quiz Title : {quiz.title}</Typography>
             </Box>
             <Divider />
-            <TakeQuizForm questions={quiz.questions} />
+            <TakeQuizForm quiz_id={quiz._id} questions={quiz.questions} />
           </>
         )}
       </Container>
